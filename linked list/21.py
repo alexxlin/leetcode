@@ -8,30 +8,58 @@
 class Solution:
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
         
-        #corner cases
-        if l1 == None:
-            return l2
-        if l2 == None:
-            return l1
+        #1. recursion
         
-        result = ListNode()
-        temp_pointer = result
-        
-        first = l1
-        second = l2
-        
-        result.val = min(l1.val, l2.val)
-        
-        while (l1 != None or l2 != None):
+        #time: O(n + m)
+        #space: O(n + m)
             
-            if l2 == None or (l1 != None and l2 != None and l1.val < l2.val):
-                temp_pointer.next = l1
-                l1 = l1.next
-                temp_pointer = temp_pointer.next
-            
-            else:
-                temp_pointer.next = l2
-                l2 = l2.next
-                temp_pointer = temp_pointer.next
+#         if l1 == None:
+#             return l2
+
+#         if l2 == None:
+#             return l1
+
+#         if l1.val <= l2.val:
+#             l1.next = self.mergeTwoLists(l1.next, l2)
+#             return l1
+
+#         else:
+#             l2.next = self.mergeTwoLists(l1, l2.next)
+#             return l2
+
+        #2. iteration
         
-        return result.next
+        #time: O(n+m)
+        #space: O(n + m) creating a new list
+
+            if l1 == None:
+                return l2
+            
+            if l2 == None:
+                return l1
+            
+            head = temp = ListNode(0)
+            
+            while l1 and l2:
+            
+                if l1.val <= l2.val:
+                    temp.next = l1
+                    l1 = l1.next
+
+                else:
+                    temp.next = l2
+                    l2 = l2.next
+                
+                temp = temp.next
+                    
+            if l1:
+                temp.next = l1
+                
+            if l2:
+                temp.next = l2
+                
+            return head.next
+                
+        
+            
+                
