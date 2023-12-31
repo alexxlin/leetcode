@@ -1,27 +1,25 @@
 /**
  * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
  */
-class Solution {
-public:
-    bool helper(TreeNode* root, long minval, long maxval) {
-        if (!root) { return true; }
-        if (root->val <= minval || root->val >= maxval) {
-            return false;
+func isValidBST(root *TreeNode) bool {
+    var dfs func(*TreeNode, int, int) bool
+
+    dfs = func(root *TreeNode, maxv int, minv int) bool {
+        if root == nil {
+            return true
         }
-        return helper(root->left, minval, root->val) && helper(root->right, root->val, maxval);
+        if root.Val >= maxv || root.Val <= minv {
+            return false
+        }
+        l := dfs(root.Left, root.Val, minv)
+        r := dfs(root.Right, maxv, root.Val)
+        return l && r
     }
 
-
-    bool isValidBST(TreeNode* root) {
-        if (!root) { return true; }
-        return helper(root->left, LONG_MIN, root->val) && helper(root->right, root->val, LONG_MAX);
-    }
-};
+    return dfs(root.Left, root.Val, math.MinInt) && dfs(root.Right, math.MaxInt, root.Val)
+}
