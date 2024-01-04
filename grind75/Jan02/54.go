@@ -22,6 +22,5 @@ func spiralOrder(matrix [][]int) []int {
     imax -= 1
     jmax -= 1
     }
-
     return ret
 }
